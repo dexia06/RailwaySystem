@@ -19,7 +19,7 @@ Responsible for monitoring approaching trains, level crossing status, gate statu
 ### 3. Maintenance Staff
 Responsible for handling reported gate faults, updating maintenance status, recording repair activities, and marking issues as resolved.
 
-## 4. What problem are we solving?7
+## 4. What problem are we solving?
 
 Railway level crossings can become dangerous when a train approaches while the crossing gate is still open or when vehicles and pedestrians are still passing through the crossing. Closing the gate immediately without checking whether the crossing area is clear can also create a risk of vehicles or pedestrians being trapped inside the crossing area.
 The proposed system aims to provide an intelligent software-based safety platform that monitors approaching trains and level crossing conditions. When a train reaches the configured 1.5 km detection point, the system automatically initiates the gate-closing workflow and checks whether vehicles or pedestrians are present in the crossing area.
