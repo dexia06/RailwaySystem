@@ -102,6 +102,7 @@ RailwaySystem/
 ├── .env.example
 ├── CHANGELOG.md
 └── LICENSE
+
 ## 8. How to Run Locally
 
 ### Prerequisites
@@ -158,6 +159,7 @@ The initial version of SmartRail is a software prototype intended for demonstrat
 The system simulates train detection, crossing occupancy, and railway gate status through the application.
 
 The system does not directly control real railway gates, trains, signalling systems, or railway infrastructure.
+
 ## 11. Success Criteria
 
 The project will be considered successful when:
@@ -173,6 +175,7 @@ The project will be considered successful when:
 - At least two major workflows operate from the React frontend through the Spring Boot backend to the MySQL database.
 - The system maintains proper relationships between the core database entities.
 - The application provides a foundation for future sensor and AI integration.
+
 # 12. Expected Outcome
 
 The SmartRail system is expected to:
@@ -187,6 +190,7 @@ The SmartRail system is expected to:
 * Maintain reliable communication between the React frontend, Spring Boot backend, and MySQL database.
 * Provide a scalable foundation for integrating real-time sensors, IoT devices, and AI-based prediction in the future.
 * Reduce the risk of accidents caused by human error or delayed gate operation.
+
 # 13. Future Enhancement
 
 The SmartRail system can be enhanced in the future with the following features:

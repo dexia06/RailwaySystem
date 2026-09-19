@@ -1,0 +1,12 @@
+.vscode/
+.idea/
+*.iml
+
+backend/target/
+frontend/node_modules/
+frontend/dist/
+
+.env
+*.env
+
+application-local.properties
