@@ -14,26 +14,16 @@ public class SafetyService {
     }
 
     public LevelCrossing detectTrain(Long crossingId, int distance) {
+
         LevelCrossing crossing = repository.findById(crossingId)
                 .orElseThrow(() -> new RuntimeException("Crossing not found"));
 
-        crossing.setTrainStatus("TRAIN_DETECTED_" + distance + "KM");
-
         if (distance == 2) {
-            if ("CLEAR".equalsIgnoreCase(crossing.getOccupancyStatus())) {
-                crossing.setGateStatus("CLOSING");
-                crossing.setSafetyStatus("WARNING");
-            } else {
-                crossing.setGateStatus("WARNING");
-                crossing.setSafetyStatus("CRITICAL");
-            }
+            crossing.setCrossingStatus("TRAIN_DETECTED_2KM");
         } else if (distance == 1) {
-            if ("CLOSED".equalsIgnoreCase(crossing.getGateStatus())
-                    && "CLEAR".equalsIgnoreCase(crossing.getOccupancyStatus())) {
-                crossing.setSafetyStatus("SAFE");
-            } else {
-                crossing.setSafetyStatus("CRITICAL");
-            }
+            crossing.setCrossingStatus("TRAIN_DETECTED_1KM");
+        } else {
+            crossing.setCrossingStatus("TRAIN_DETECTED");
         }
 
         return repository.save(crossing);
