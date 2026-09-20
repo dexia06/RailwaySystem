@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 
+const API_BASE_URL =
+  "https://railwaysystem-production.up.railway.app";
+
 function App() {
   const [login, setLogin] = useState(false);
   const [username, setUsername] = useState("");
@@ -18,7 +21,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/auth/login",
+        `${API_BASE_URL}/api/auth/login`,
         {
           method: "POST",
           headers: {
@@ -52,7 +55,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/safety/detect/1/${distance}`,
+        `${API_BASE_URL}/api/safety/detect/1/${distance}`,
         {
           method: "POST"
         }
@@ -78,7 +81,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/gate/close/1",
+        `${API_BASE_URL}/api/gate/close/1`,
         {
           method: "POST"
         }
@@ -90,13 +93,25 @@ function App() {
 
       const data = await response.json();
 
-      setCrossing(data);
+      setCrossing((previous) => ({
+        ...previous,
+        ...data,
+        gateStatus: "CLOSED"
+      }));
     } catch (error) {
       console.error(error);
       alert("Unable to close gate");
     }
 
     setLoading(false);
+  }
+
+  function logout() {
+    setLogin(false);
+    setUsername("");
+    setPassword("");
+    setRole("");
+    setCrossing(null);
   }
 
   function AdminDashboard() {
@@ -146,7 +161,9 @@ function App() {
           Manage railway crossings, users and overall SmartRail operations.
         </p>
 
-        <button onClick={logout}>Logout</button>
+        <button onClick={logout}>
+          Logout
+        </button>
       </div>
     );
   }
@@ -166,7 +183,7 @@ function App() {
             <br />
             <b>
               {crossing
-                ? crossing.trainStatus
+                ? crossing.trainStatus || "Not Detected"
                 : "Monitoring"}
             </b>
           </div>
@@ -178,7 +195,7 @@ function App() {
             <br />
             <b>
               {crossing
-                ? crossing.gateStatus
+                ? crossing.gateStatus || "OPEN"
                 : "Closed"}
             </b>
           </div>
@@ -192,6 +209,8 @@ function App() {
               {crossing
                 ? crossing.safetyStatus === "CRITICAL"
                   ? "CRITICAL"
+                  : crossing.safetyStatus === "WARNING"
+                  ? "WARNING"
                   : "No Alerts"
                 : "No Alerts"}
             </b>
@@ -204,7 +223,7 @@ function App() {
             <br />
             <b>
               {crossing
-                ? crossing.safetyStatus
+                ? crossing.safetyStatus || "SAFE"
                 : "Safe"}
             </b>
           </div>
@@ -239,38 +258,44 @@ function App() {
           </button>
         </div>
 
+        {loading && (
+          <p>
+            ⏳ Processing SmartRail safety request...
+          </p>
+        )}
+
         {crossing && (
           <div>
             <h3>Live Crossing Status</h3>
 
             <p>
               <b>Crossing:</b>{" "}
-              {crossing.crossingName}
+              {crossing.crossingName || "LC-TPJ-01"}
             </p>
 
             <p>
               <b>Location:</b>{" "}
-              {crossing.location}
+              {crossing.location || "Tiruchirappalli Junction"}
             </p>
 
             <p>
               <b>Train:</b>{" "}
-              {crossing.trainStatus}
+              {crossing.trainStatus || "Not Detected"}
             </p>
 
             <p>
               <b>Gate:</b>{" "}
-              {crossing.gateStatus}
+              {crossing.gateStatus || "OPEN"}
             </p>
 
             <p>
               <b>Occupancy:</b>{" "}
-              {crossing.occupancyStatus}
+              {crossing.occupancyStatus || "CLEAR"}
             </p>
 
             <p>
               <b>Safety:</b>{" "}
-              {crossing.safetyStatus}
+              {crossing.safetyStatus || "SAFE"}
             </p>
 
             {crossing.safetyStatus === "CRITICAL" && (
@@ -352,14 +377,6 @@ function App() {
         </button>
       </div>
     );
-  }
-
-  function logout() {
-    setLogin(false);
-    setUsername("");
-    setPassword("");
-    setRole("");
-    setCrossing(null);
   }
 
   if (login) {
