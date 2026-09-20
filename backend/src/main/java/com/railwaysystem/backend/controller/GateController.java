@@ -21,7 +21,7 @@ public class GateController {
         LevelCrossing crossing = repository.findById(crossingId)
                 .orElseThrow(() -> new RuntimeException("Crossing not found"));
 
-        crossing.setGateStatus("CLOSED");
+        crossing.setCrossingStatus("GATE_CLOSED");
 
         return repository.save(crossing);
     }

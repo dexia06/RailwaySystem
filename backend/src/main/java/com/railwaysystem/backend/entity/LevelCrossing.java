@@ -8,50 +8,48 @@ public class LevelCrossing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long crossingId;
 
-    @Column(nullable = false)
-    private String crossingName;
+    @ManyToOne
+    @JoinColumn(name = "station_id", nullable = false)
+    private RailwayStation station;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
+    private String crossingCode;
+
     private String location;
 
-    @Column(nullable = false)
-    private String gateStatus;
-
-    @Column(nullable = false)
-    private String occupancyStatus;
-
-    @Column(nullable = false)
-    private String trainStatus;
-
-    @Column(nullable = false)
-    private String safetyStatus;
+    private String crossingStatus;
 
     public LevelCrossing() {
     }
 
-    public LevelCrossing(String crossingName, String location,
-                          String gateStatus, String occupancyStatus,
-                          String trainStatus, String safetyStatus) {
-        this.crossingName = crossingName;
+    public LevelCrossing(RailwayStation station, String crossingCode,
+                         String location, String crossingStatus) {
+        this.station = station;
+        this.crossingCode = crossingCode;
         this.location = location;
-        this.gateStatus = gateStatus;
-        this.occupancyStatus = occupancyStatus;
-        this.trainStatus = trainStatus;
-        this.safetyStatus = safetyStatus;
+        this.crossingStatus = crossingStatus;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCrossingId() {
+        return crossingId;
     }
 
-    public String getCrossingName() {
-        return crossingName;
+    public RailwayStation getStation() {
+        return station;
     }
 
-    public void setCrossingName(String crossingName) {
-        this.crossingName = crossingName;
+    public void setStation(RailwayStation station) {
+        this.station = station;
+    }
+
+    public String getCrossingCode() {
+        return crossingCode;
+    }
+
+    public void setCrossingCode(String crossingCode) {
+        this.crossingCode = crossingCode;
     }
 
     public String getLocation() {
@@ -62,35 +60,11 @@ public class LevelCrossing {
         this.location = location;
     }
 
-    public String getGateStatus() {
-        return gateStatus;
+    public String getCrossingStatus() {
+        return crossingStatus;
     }
 
-    public void setGateStatus(String gateStatus) {
-        this.gateStatus = gateStatus;
-    }
-
-    public String getOccupancyStatus() {
-        return occupancyStatus;
-    }
-
-    public void setOccupancyStatus(String occupancyStatus) {
-        this.occupancyStatus = occupancyStatus;
-    }
-
-    public String getTrainStatus() {
-        return trainStatus;
-    }
-
-    public void setTrainStatus(String trainStatus) {
-        this.trainStatus = trainStatus;
-    }
-
-    public String getSafetyStatus() {
-        return safetyStatus;
-    }
-
-    public void setSafetyStatus(String safetyStatus) {
-        this.safetyStatus = safetyStatus;
+    public void setCrossingStatus(String crossingStatus) {
+        this.crossingStatus = crossingStatus;
     }
 }

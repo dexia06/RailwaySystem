@@ -23,13 +23,7 @@ public class OccupancyController {
         LevelCrossing crossing = repository.findById(crossingId)
                 .orElseThrow(() -> new RuntimeException("Crossing not found"));
 
-        if (!status.equalsIgnoreCase("CLEAR")
-                && !status.equalsIgnoreCase("OCCUPIED")) {
-            throw new IllegalArgumentException(
-                    "Occupancy status must be CLEAR or OCCUPIED");
-        }
-
-        crossing.setOccupancyStatus(status.toUpperCase());
+        crossing.setCrossingStatus("OCCUPANCY_" + status.toUpperCase());
 
         return repository.save(crossing);
     }
