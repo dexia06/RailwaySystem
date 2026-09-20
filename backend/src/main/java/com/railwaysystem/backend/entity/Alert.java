@@ -1,7 +1,6 @@
 package com.railwaysystem.backend.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "alerts")
@@ -9,38 +8,55 @@ public class Alert {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long alertId;
 
-    private Long crossingId;
+    @ManyToOne
+    @JoinColumn(name = "fault_id", nullable = false)
+    private FaultReport fault;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     private String alertType;
-    private String message;
-    private String severity;
+
+    private String alertMessage;
+
     private String status;
-    private LocalDateTime createdAt;
 
     public Alert() {
     }
 
-    public Alert(Long crossingId, String alertType, String message,
-                 String severity, String status, LocalDateTime createdAt) {
-        this.crossingId = crossingId;
+    public Alert(FaultReport fault,
+                 User user,
+                 String alertType,
+                 String alertMessage,
+                 String status) {
+        this.fault = fault;
+        this.user = user;
         this.alertType = alertType;
-        this.message = message;
-        this.severity = severity;
+        this.alertMessage = alertMessage;
         this.status = status;
-        this.createdAt = createdAt;
     }
 
-    public Long getId() {
-        return id;
+    public Long getAlertId() {
+        return alertId;
     }
 
-    public Long getCrossingId() {
-        return crossingId;
+    public FaultReport getFault() {
+        return fault;
     }
 
-    public void setCrossingId(Long crossingId) {
-        this.crossingId = crossingId;
+    public void setFault(FaultReport fault) {
+        this.fault = fault;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getAlertType() {
@@ -51,20 +67,12 @@ public class Alert {
         this.alertType = alertType;
     }
 
-    public String getMessage() {
-        return message;
+    public String getAlertMessage() {
+        return alertMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getSeverity() {
-        return severity;
-    }
-
-    public void setSeverity(String severity) {
-        this.severity = severity;
+    public void setAlertMessage(String alertMessage) {
+        this.alertMessage = alertMessage;
     }
 
     public String getStatus() {
@@ -73,13 +81,5 @@ public class Alert {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }

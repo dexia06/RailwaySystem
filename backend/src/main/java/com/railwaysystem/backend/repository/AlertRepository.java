@@ -7,5 +7,9 @@ import java.util.List;
 
 public interface AlertRepository extends JpaRepository<Alert, Long> {
 
-    List<Alert> findByCrossingIdOrderByCreatedAtDesc(Long crossingId);
+    List<Alert> findByFaultFaultId(Long faultId);
+
+    List<Alert> findByUserId(Long userId);
+
+    List<Alert> findByStatus(String status);
 }
