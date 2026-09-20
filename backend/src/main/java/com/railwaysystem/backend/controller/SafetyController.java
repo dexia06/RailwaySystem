@@ -1,6 +1,6 @@
 package com.railwaysystem.backend.controller;
 
-import com.railwaysystem.backend.entity.LevelCrossing;
+import com.railwaysystem.backend.dto.SafetyResponse;
 import com.railwaysystem.backend.service.SafetyService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class SafetyController {
     }
 
     @PostMapping("/detect/{crossingId}/{distance}")
-    public LevelCrossing detectTrain(
+    public SafetyResponse detectTrain(
             @PathVariable Long crossingId,
             @PathVariable int distance) {
 
