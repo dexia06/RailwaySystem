@@ -10,3 +10,4 @@ frontend/dist/
 *.env
 
 application-local.properties
+.vercel

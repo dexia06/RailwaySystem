@@ -67,7 +67,28 @@ function App() {
 
       const data = await response.json();
 
-      setCrossing(data);
+      setCrossing({
+  crossingName: data.crossingCode || "LC-TPJ-01",
+  location: data.location || "Tiruchirappalli Junction",
+  trainStatus:
+    data.trainStatus ||
+    (distance === 2
+      ? "TRAIN DETECTED - 2 KM"
+      : "TRAIN DETECTED - 1 KM"),
+  gateStatus:
+    data.gateStatus ||
+    (data.crossingStatus === "GATE_NOT_CLOSED"
+      ? "OPEN"
+      : "CLOSED"),
+  occupancyStatus: data.occupancyStatus || "CLEAR",
+  safetyStatus:
+    data.safetyStatus ||
+    (data.crossingStatus === "GATE_NOT_CLOSED"
+      ? "CRITICAL"
+      : distance === 2
+      ? "WARNING"
+      : "SAFE")
+});
     } catch (error) {
       console.error(error);
       alert("Unable to connect to SmartRail safety system");

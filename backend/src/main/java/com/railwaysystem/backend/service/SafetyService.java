@@ -21,31 +21,34 @@ public class SafetyService {
 
         String trainStatus;
         String gateStatus;
-        String occupancyStatus;
+        String occupancyStatus = "CLEAR";
         String safetyStatus;
 
         if (distance == 2) {
-            crossing.setCrossingStatus("TRAIN_DETECTED_2KM");
 
             trainStatus = "TRAIN DETECTED - 2 KM";
             gateStatus = "CLOSED";
-            occupancyStatus = "CLEAR";
             safetyStatus = "WARNING";
 
         } else if (distance == 1) {
-            crossing.setCrossingStatus("TRAIN_DETECTED_1KM");
 
             trainStatus = "TRAIN DETECTED - 1 KM";
-            gateStatus = "CLOSED";
-            occupancyStatus = "CLEAR";
-            safetyStatus = "SAFE";
+
+            if ("GATE_CLOSED".equals(crossing.getCrossingStatus())) {
+
+                gateStatus = "CLOSED";
+                safetyStatus = "SAFE";
+
+            } else {
+
+                gateStatus = "OPEN";
+                safetyStatus = "CRITICAL";
+            }
 
         } else {
-            crossing.setCrossingStatus("TRAIN_DETECTED");
 
             trainStatus = "TRAIN DETECTED";
             gateStatus = "CLOSED";
-            occupancyStatus = "CLEAR";
             safetyStatus = "SAFE";
         }
 
