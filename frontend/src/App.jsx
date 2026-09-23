@@ -3,6 +3,7 @@ import "./App.css";
 import Register from "./Register";
 
 const API_BASE_URL = "https://railwaysystem-production.up.railway.app";
+
 function App() {
   const [login, setLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -86,21 +87,23 @@ function App() {
             : "TRAIN DETECTED - 1 KM"),
 
         gateStatus:
-          data.gateStatus ||
-          (data.crossingStatus === "GATE_NOT_CLOSED"
+          distance === 2
             ? "OPEN"
-            : "CLOSED"),
+            : data.gateStatus ||
+              (data.crossingStatus === "GATE_NOT_CLOSED"
+                ? "OPEN"
+                : "CLOSED"),
 
         occupancyStatus:
           data.occupancyStatus || "CLEAR",
 
         safetyStatus:
-          data.safetyStatus ||
-          (data.crossingStatus === "GATE_NOT_CLOSED"
-            ? "CRITICAL"
-            : distance === 2
+          distance === 2
             ? "WARNING"
-            : "SAFE")
+            : data.safetyStatus ||
+              (data.crossingStatus === "GATE_NOT_CLOSED"
+                ? "CRITICAL"
+                : "SAFE")
       });
     } catch (error) {
       console.error(error);
@@ -164,7 +167,6 @@ function App() {
         <h2>👑 Admin Dashboard</h2>
 
         <div className="cards">
-
           <div
             onClick={() => setAdminDetail("train")}
             style={{ cursor: "pointer" }}
@@ -208,7 +210,6 @@ function App() {
             <br />
             <b>Safe</b>
           </div>
-
         </div>
 
         {adminDetail === "train" && (
@@ -345,7 +346,6 @@ function App() {
         <h2>🚦 Railway Officer Dashboard</h2>
 
         <div className="cards">
-
           <div
             onClick={() => setOfficerDetail("train")}
             style={{ cursor: "pointer" }}
@@ -409,7 +409,6 @@ function App() {
                 : "Safe"}
             </b>
           </div>
-
         </div>
 
         {officerDetail === "train" && (
@@ -553,7 +552,6 @@ function App() {
         </p>
 
         <div>
-
           <button
             onClick={() => detectTrain(2)}
             disabled={loading}
@@ -574,7 +572,6 @@ function App() {
           >
             ⚠️ Verify Train at 1 KM
           </button>
-
         </div>
 
         {loading && (
@@ -657,7 +654,6 @@ function App() {
         <h2>🔧 Maintenance Dashboard</h2>
 
         <div className="cards">
-
           <div
             onClick={() => setMaintenanceDetail("gate")}
             style={{ cursor: "pointer" }}
@@ -701,7 +697,6 @@ function App() {
             <br />
             <b>None</b>
           </div>
-
         </div>
 
         {maintenanceDetail === "gate" && (
@@ -851,7 +846,6 @@ function App() {
      ========================= */
 
   if (login) {
-
     if (role === "ADMIN") {
       return <AdminDashboard />;
     }
@@ -866,13 +860,11 @@ function App() {
 
     return (
       <div className="dashboard">
-
         <h2>Unknown Role</h2>
 
         <button onClick={logout}>
           Logout
         </button>
-
       </div>
     );
   }
@@ -883,9 +875,7 @@ function App() {
 
   return (
     <div className="login-page">
-
       <div className="login-box">
-
         <h1>🚆 SmartRail</h1>
 
         <p>Railway Safety System</p>
@@ -930,9 +920,7 @@ function App() {
         >
           Register
         </button>
-
       </div>
-
     </div>
   );
 }

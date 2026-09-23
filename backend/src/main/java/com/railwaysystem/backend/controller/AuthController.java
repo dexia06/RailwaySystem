@@ -12,7 +12,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "https://railway-system-hazel.vercel.app")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://railway-system-hazel.vercel.app"
+})
 public class AuthController {
 
     private final UserRepository userRepository;
@@ -20,10 +24,12 @@ public class AuthController {
     private final OtpService otpService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserRepository userRepository,
-                          AuthService authService,
-                          OtpService otpService,
-                          PasswordEncoder passwordEncoder) {
+    public AuthController(
+            UserRepository userRepository,
+            AuthService authService,
+            OtpService otpService,
+            PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
         this.authService = authService;
         this.otpService = otpService;
@@ -33,7 +39,8 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
 
-        Optional<User> user = userRepository.findByEmail(request.email());
+        Optional<User> user =
+                userRepository.findByEmail(request.email());
 
         if (user.isEmpty()) {
             return "Invalid email or password";
@@ -42,10 +49,12 @@ public class AuthController {
         if (!passwordEncoder.matches(
                 request.password(),
                 user.get().getPassword())) {
+
             return "Invalid email or password";
         }
 
-        return "Login successful - Role: " + user.get().getRole();
+        return "Login successful - Role: "
+                + user.get().getRole();
     }
 
     @PostMapping("/register/send-otp")
@@ -84,7 +93,9 @@ public class AuthController {
         }
 
         try {
-            Role selectedRole = Role.valueOf(request.role());
+
+            Role selectedRole =
+                    Role.valueOf(request.role());
 
             authService.createUser(
                     request.name(),
@@ -96,9 +107,11 @@ public class AuthController {
             return "Registration successful";
 
         } catch (IllegalArgumentException e) {
+
             return "Invalid role selected";
 
         } catch (RuntimeException e) {
+
             return e.getMessage();
         }
     }

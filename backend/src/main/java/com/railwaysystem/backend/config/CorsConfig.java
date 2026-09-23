@@ -17,7 +17,12 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(
-                List.of("https://railway-system-hazel.vercel.app")
+                List.of(
+                        "http://localhost:5173",
+                        "http://localhost:5174",
+                        "http://localhost:5175",
+                        "https://railway-system-hazel.vercel.app"
+                )
         );
 
         config.setAllowedMethods(

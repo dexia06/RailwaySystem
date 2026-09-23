@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 const API_BASE_URL = "https://railwaysystem-production.up.railway.app";
+
 function Register({ onBack, onRegistered }) {
   const [step, setStep] = useState(1);
-
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
@@ -180,6 +180,7 @@ function Register({ onBack, onRegistered }) {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
+
         <h1 style={styles.title}>🚆 SmartRail</h1>
 
         {step === 1 && (
@@ -319,7 +320,6 @@ function Register({ onBack, onRegistered }) {
 
             <div style={styles.rules}>
               <b>Password must contain:</b>
-
               <p>✓ Minimum 8 characters</p>
               <p>✓ One uppercase letter</p>
               <p>✓ One lowercase letter</p>
@@ -384,6 +384,7 @@ function Register({ onBack, onRegistered }) {
             {message}
           </p>
         )}
+
       </div>
     </div>
   );
