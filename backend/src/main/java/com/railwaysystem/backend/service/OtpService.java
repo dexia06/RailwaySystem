@@ -17,9 +17,8 @@ import java.util.Random;
 public class OtpService {
 
     private final OtpVerificationRepository otpRepository;
-
-    @Value("${BREVO_API_KEY:}")
-    private String brevoApiKey;
+@Value("${BREVO_API_KEY}")
+private String brevoApiKey;
 
     @Value("${spring.mail.username}")
     private String senderEmail;
