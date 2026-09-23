@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://railway-system-hazel.vercel.app")
 public class AuthController {
 
     private final UserRepository userRepository;
